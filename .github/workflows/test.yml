@@ -15,18 +15,31 @@ jobs:
     - 
       name: Checkout
       uses: actions/checkout@v2
-    -
-      run: ls
-      
-  test:
+
+  build:
+    needs: checkout
     runs-on: ubuntu-latest
      
     steps:
     - 
-      name: Checkout
-      uses: actions/checkout@v2
+      name: No-op
+      run: ls
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+     
+    steps:
     - 
       run: docker run --rm -i -v ${PWD}:/workspace canembed/arm-environ:master cmake --version
     -
       run: docker run --rm -i -v ${PWD}:/workspace canembed/arm-environ:master ls -R /workspace
     
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+    -
+      run: ls
+      
