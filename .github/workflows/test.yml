@@ -26,11 +26,7 @@ jobs:
       name: Checkout
       uses: actions/checkout@v2
     - 
-      run: docker run --rm -i \
-            -v ${PWD}:/workspace \
-            canembed/arm-environ:master cmake --version
+      run: docker run --rm -i -v ${PWD}:/workspace canembed/arm-environ:master cmake --version
     -
-      run: docker run --rm -i \
-            -v ${PWD}:/workspace \
-            canembed/arm-environ:master ls -R /workspace
+      run: docker run --rm -i -v ${PWD}:/workspace canembed/arm-environ:master ls -R /workspace
     
