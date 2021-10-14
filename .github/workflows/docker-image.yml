@@ -40,3 +40,14 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+  test:
+    runs-on: ubuntu-latest
+    container: canembed/arm-environ:master
+     
+    steps:
+    - 
+      name: Checkout
+      uses: actions/checkout@v2
+    - 
+      run: cmake --version
+    
