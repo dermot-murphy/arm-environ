@@ -30,12 +30,7 @@ jobs:
     -
       name: Test (Copy local file via docker)
       run: docker run --rm -i -v ${PWD}:/workspace canembed/arm-environ:master cp /workspace/README.md /workspace/README.old
-    
-  publish:
-    needs: test
-    runs-on: ubuntu-latest
-    
-    steps:
     -
+      name: Publish
       run: ls
       
