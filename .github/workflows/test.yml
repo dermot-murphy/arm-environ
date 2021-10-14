@@ -20,11 +20,19 @@ jobs:
       
   test:
     runs-on: ubuntu-latest
-    container: canembed/arm-environ:master
      
     steps:
     - 
-      run: cmake --version
+      name: Checkout
+      uses: actions/checkout@v2
+    - 
+      run: docker run --rm -i \
+            -v ${PWD}:/workspace/source \
+            -w /workspace/source \
+            canembed/arm-environ:master cmake --version
     -
-      run: ls -R /github
+      run: docker run --rm -i \
+            -v ${PWD}:/workspace/source \
+            -w /workspace/source \
+            canembed/arm-environ:master ls -R /github
     
