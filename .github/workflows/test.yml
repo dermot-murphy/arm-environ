@@ -8,34 +8,28 @@ on:
 
 jobs:
 
-  checkout:
+  Build:
     runs-on: ubuntu-latest
  
     steps:
     - 
       name: Checkout
       uses: actions/checkout@v2
-
-  build:
-    needs: checkout
-    runs-on: ubuntu-latest
-     
-    steps:
     - 
       name: No-op
       run: ls
-
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-     
-    steps:
     - 
+      name: Test (CMake)
       run: docker run --rm -i -v ${PWD}:/workspace canembed/arm-environ:master cmake --version
     -
+      name: Test (Local files)
       run: docker run --rm -i -v ${PWD}:/workspace canembed/arm-environ:master ls -R /workspace
     -
+      name: Test (Copy local file via shell)
       run: cp README.md old.md
+    -
+      name: Test (Copy local file via docker)
+      run: docker run --rm -i -v ${PWD}:/workspace canembed/arm-environ:master cp /workspace/README.md /workspace/README.old
     
   publish:
     needs: test
