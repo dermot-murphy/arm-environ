@@ -7,14 +7,15 @@ FROM ubuntu:18.04
 LABEL MAINTAINER Dermot Murphy <dermot.murphy@canembed.com> Name=arm-environ
 
 # Arguments (Segger Compiler)
-ARG SEGGER_EMSTUDIO_DL=https://www.segger.com/downloads/embedded-studio/Setup_EmbeddedStudio_ARM_v416_linux_x64.tar.gz
+ARG SEGGER_VERSION=416
+ARG SEGGER_EMSTUDIO_DL=https://www.segger.com/downloads/embedded-studio/Setup_EmbeddedStudio_ARM_v${SEGGER_VERSION}_linux_x64.tar.gz
 
 # Arguments (Nordic SDK)
 ARG NORDIC_SDK_DL=https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v15.x.x/nRF5_SDK_15.2.0_9412b96.zip
 
 # Arguments (Nordic tools)
-#ARG NORDIC_TOOLS_DL=https://www.nordicsemi.com/-/media/Software-and-other-downloads/Desktop-software/nRF-command-line-tools/sw/Versions-10-x-x/10-14-0/nRF-Command-Line-Tools_10_14_0_Linux64.zip
-ARG NORDIC_TOOLS_DL=https://github.com/NordicSemiconductor/pc-nrfutil/releases/download/v6.1.2/nrfutil-6.1.2.tar.gz
+ARG NORDIC_TOOLS_DL=https://www.nordicsemi.com/-/media/Software-and-other-downloads/Desktop-software/nRF-command-line-tools/sw/Versions-10-x-x/10-14-0/nRF-Command-Line-Tools_10_14_0_Linux64.zip
+#ARG NORDIC_TOOLS_DL=https://github.com/NordicSemiconductor/pc-nrfutil/releases/download/v6.1.2/nrfutil-6.1.2.tar.gz
 
 # Arguments (ARM GNU Compiler)
 ARG ARM_COMPILER_DL=https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2
@@ -78,7 +79,7 @@ RUN	mkdir -p /compilers/segger			&& \
 	printf 'yes\n' | DISPLAY=:1 $(find arm_segger_* -name "install_segger*") --copy-files-to /compilers/segger 	&& \
 	rm ses.tar.gz 					&& \
 	rm -rf arm_segger_embedded_studio_*
-ENV PATH=/compilers/segger/bin:$PATH
+ENV PATH=$PATH:/compilers/segger/bin
 
 # Nordic SDK
 RUN	mkdir -p /nordic/sdk 				&& \
@@ -91,8 +92,14 @@ RUN	mkdir -p /nordic/sdk 				&& \
 RUN	mkdir -p /nordic/nrftools 			&& \
 	cd /nordic/nrftools 				&& \
 	wget $NORDIC_TOOLS_DL -O nrftools.tar.gz	&& \
-	tar -xvf nrftools.tar.gz
+	unzip nrftools.tar.gz
 ENV PATH=/nordic/nrftools/nrf-command-line-tools/bin:$PATH
+
+# SREC Cat
+#RUN	apt-get update && \
+	#apt-get install -y software-properties-common   && \
+	#add-apt-repository ppa:pmiller-opensource/ppa   && \
+	#apt-get install srecord
 
 # Working directory
 #WORKDIR /data
