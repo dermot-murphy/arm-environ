@@ -9,9 +9,7 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - 
       name: Checkout
@@ -43,7 +41,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container: canembed/arm-environ:master
-     
     steps:
     - 
       run: cmake --version
