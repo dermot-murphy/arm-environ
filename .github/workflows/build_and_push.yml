@@ -21,7 +21,13 @@ jobs:
       with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PAT }}
-    
+          
+    - name: Extract metadata for Docker
+      id:   meta
+      uses: docker/metadata-action@v3
+      with:
+          images: canembed/arm-environ
+
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
