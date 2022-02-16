@@ -7,7 +7,7 @@ FROM ubuntu:20.04
 LABEL MAINTAINER Dermot Murphy <dermot.murphy@canembed.com> Name=arm-environ
 
 # Arguments (Segger Compiler)
-ARG SEGGER_VERSION=416
+ARG SEGGER_VERSION=510
 ARG SEGGER_EMSTUDIO_URL=https://www.segger.com/downloads/embedded-studio/Setup_EmbeddedStudio_ARM_v${SEGGER_VERSION}_linux_x64.tar.gz
 
 # Arguments (Nordic SDK)
